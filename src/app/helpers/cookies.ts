@@ -5,7 +5,7 @@ export const getCookie = (name: string): string | null => {
 };
 
 // Cookieを設定する関数
-export const setCookie = (name: string, value: string, days: number): void => {
+export const setCookie = (name: string, value: string, days: number = 7): void => {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); // 有効期限を設定（デフォルトで7日）
     const expires = `expires=${date.toUTCString()}`;

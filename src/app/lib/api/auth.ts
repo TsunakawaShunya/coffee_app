@@ -1,16 +1,6 @@
 // lib/api/auth.ts
+import { setCookie, getCookie } from "@/app/helpers/cookies";
 const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1/auth";
-
-// Cookie操作のヘルパー関数
-const setCookie = (name: string, value: string, days = 7) => {
-  const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
-};
-
-const getCookie = (name: string): string | null => {
-  const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-  return match ? decodeURIComponent(match[2]) : null;
-};
 
 const signIn = async ({ email, password }: { email: string; password: string }) => {
   const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/sign_in`, {
@@ -59,6 +49,35 @@ const signUp = async ({ name, email, password }: { name: string; email: string; 
   return data;
 };
 
+const logOut = async () => {
+  try {
+    const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/sign_out`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        uid: getCookie("uid") || "",
+        "access-token": getCookie("access-token") || "",
+        client: getCookie("client") || "",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("ログアウトに失敗しました。");
+    }
+
+    // Cookie をクリア
+    setCookie("uid", "", -1);
+    setCookie("access-token", "", -1);
+    setCookie("client", "", -1);
+
+    // ホームにリダイレクト
+    window.location.href = "/";
+  } catch (error) {
+    console.error("ログアウト中にエラーが発生しました:", error);
+    throw error;
+  }
+};
+
 const currentUser = async () => {
   try {
     const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/sessions`, {
@@ -83,4 +102,13 @@ const currentUser = async () => {
   }
 };
 
-export { signIn, signUp, currentUser };
+const checkAuthentication = async (): Promise<boolean> => {
+  try {
+    const user = await currentUser();
+    return !!user; // ユーザー情報が取得できれば true
+  } catch (error) {
+    return false; // 取得できなければ false
+  }
+};
+
+export { signIn, signUp, currentUser, logOut, checkAuthentication };
