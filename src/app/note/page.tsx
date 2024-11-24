@@ -1,9 +1,9 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import BeansList from "../components/Bean/BeansList";
+import NotesList from "@/app/components/Note/NotesList";
 
-const Bean = () => {
+const Notes = () => {
   const router = useRouter();
   
   return (
@@ -12,18 +12,16 @@ const Bean = () => {
         My Coffee Notes
       </h1>
       
-      {/* モーダルを開くためのボタン */}
       <button
-        onClick={() => router.push('note/create')}
+        onClick={() => router.push('/note/create')}
         className="mb-8 bg-gray-800 text-white px-4 py-2 rounded"
       >
         Add Note
       </button>
       
-      {/* 豆のリスト */}
-      <BeansList />
+      <NotesList />
     </div>
   );
 };
 
-export default Bean;
+export default Notes;

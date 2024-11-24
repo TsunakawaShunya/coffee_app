@@ -5,22 +5,25 @@ import { getCookie } from "@/app/helpers/cookies";
 
 const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
 
-interface Bean {
+interface Note {
   id: number;
-  name: string;
-  roast: string;
-  process: string | null;
+  bean: { name: string } | null;
+  recipe: { title: string } | null;
+  taste_x: number;
+  taste_y: number;
+  comment: string | null;
+  created_at: string;
 }
 
-const BeansList = () => {
-  const [beans, setBeans] = useState<Bean[]>([]);
+const NotesList = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBeans = async () => {
+    const fetchNotes = async () => {
       try {
-        const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/beans`, {
+        const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/notes`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -31,11 +34,12 @@ const BeansList = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch beans.");
+          throw new Error("Failed to fetch notes.");
         }
 
         const data = await response.json();
-        setBeans(data || []);
+        console.log(data);
+        setNotes(Array.isArray(data) ? data : [data]);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An unknown error occurred.");
       } finally {
@@ -43,15 +47,14 @@ const BeansList = () => {
       }
     };
 
-    fetchBeans();
+    fetchNotes();
   }, []);
 
-  const handleDelete = async (id: number, name: string) => {
-    const confirmDelete = window.confirm(`「${name}」を削除しますか？`);
-    if (!confirmDelete) return;
+  const handleDelete = async (id: number) => {
+    if (!window.confirm("このノートを削除してもよろしいですか？")) return;
 
     try {
-      const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/beans/${id}`, {
+      const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/notes/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -62,14 +65,20 @@ const BeansList = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete the bean.");
+        throw new Error("Failed to delete note.");
       }
 
-      // 削除が成功したら、ローカルのリストからも削除
-      setBeans((prevBeans) => prevBeans.filter((bean) => bean.id !== id));
+      // 削除が成功したらリストを更新
+      setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An unknown error occurred.");
-    }
+      alert(err instanceof Error ? err.message : "削除中にエラーが発生しました。");
+    };
+  }
+
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("ja-JP");
   };
 
   if (loading) {
@@ -82,33 +91,40 @@ const BeansList = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {beans.length > 0 ? (
-        beans.map((bean) => (
+      {notes.length > 0 ? (
+        notes.map((note) => (
           <div
-            key={bean.id}
+            key={note.id}
             className="relative border border-gray-200 rounded-lg shadow-md p-6 bg-white hover:shadow-lg transition-shadow"
           >
-            {/* バツマーク */}
+            {/* 日付のリンク */}
+            <a
+              href={`/note/${note.id}`}
+              className="text-lg font-bold text-blue-500 hover:underline cursor-pointer"
+            >
+              {formatDate(note.created_at)}
+            </a>
+
+            {/* 削除ボタン */}
             <button
-              onClick={() => handleDelete(bean.id, bean.name)}
+              onClick={() => handleDelete(note.id)}
               className="absolute top-2 right-2 text-gray-800 hover:text-red-600 transition-colors text-2xl font-bold"
             >
               &times;
             </button>
-            <h2 className="text-lg font-bold text-gray-800">{bean.name}</h2>
+            
+            {/* 豆の名前とレシピのタイトル */}
             <p className="text-gray-800 mt-2">
-              <strong>Roast:</strong> {bean.roast || "Not Available"}
-            </p>
-            <p className="text-gray-800">
-              <strong>Process:</strong> {bean.process || "Not Available"}
+              <strong>Bean: </strong>{note.bean?.name || "Unknown"} <br />
+              <strong>Recipe: </strong>{note.recipe?.title || "Not Available"}
             </p>
           </div>
         ))
       ) : (
-        <div className="col-span-full text-center text-gray-500">No beans found.</div>
+        <div className="col-span-full text-center text-gray-500">No notes found.</div>
       )}
     </div>
   );
 };
 
-export default BeansList;
+export default NotesList;

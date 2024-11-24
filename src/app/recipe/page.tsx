@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import RecipesList from "../components/Recipe/RecipesList";
+import RecipesList from "@/app//components/Recipe/RecipesList";
 
 const Bean = () => {
   const router = useRouter();
