@@ -101,10 +101,10 @@ const RecipesList = () => {
               <strong>Method:</strong> {recipe.method || "Not Available"}
             </p>
             <p className="text-gray-800">
-              <strong>Temp:</strong> {recipe.temp || "Not Available"}°C
+              <strong>Temp:</strong> {recipe.temp || "Not Available"}[°C]
             </p>
             <p className="text-gray-800">
-              <strong>Ratio:</strong> {recipe.ratio || "Not Available"} g/100ml
+              <strong>Ratio:</strong> {recipe.ratio || "Not Available"} [g/100cc]
             </p>
           </div>
         ))

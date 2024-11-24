@@ -1,23 +1,28 @@
-// pages/bean/create.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from '../../helpers/cookies'; // ヘルパー関数をインポート
+import { useBeansAndRecipes } from '../../hooks/useBeansAndRecipes';
+import CoordinateSelector from '../../components/Note/CoordinateSelector';
 
-const CreateBean = () => {
-  const [name, setName] = useState('');
-  const [roast, setRoast] = useState('');
-  const [process, setProcess] = useState('');
+const CreateNote = () => {
+  const [beanId, setBeanId] = useState('');
+  const [recipeId, setRecipeId] = useState('');
+  const [tasteX, setTasteX] = useState(0);
+  const [tasteY, setTasteY] = useState(0);
+  const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
   const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+
+  const { beans, recipes, loading, error: fetchError } = useBeansAndRecipes();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/beans`, {
+      const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/notes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,76 +31,103 @@ const CreateBean = () => {
           'client': getCookie('client') || '',
         },
         body: JSON.stringify({
-            bean: {
-              name,
-              roast,
-              process
+            note: {
+              bean_id: beanId,
+              recipe_id: recipeId,
+              taste_x: tasteX,
+              taste_y: tasteY,
+              comment
             }
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to create new bean.');
+        throw new Error('Failed to create new note.');
       }
 
       // 成功したら、リストページにリダイレクト
-      router.push('/bean');
+      router.push('/note');
     } catch (error) {
       setError(error instanceof Error ? error.message : 'An error occurred.');
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (fetchError) return <p>{fetchError}</p>;
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Add a New Bean</h1>
+      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Add a New Note</h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-gray-800">Name</label>
-          <input
-            id="name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+          <label htmlFor="beanId" className="block text-gray-800">Bean</label>
+          <select
+            id="beanId"
+            value={beanId}
+            onChange={(e) => setBeanId(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             required
-          />
+          >
+            <option value="">Select a bean</option>
+            {beans.map((bean) => (
+              <option key={bean.id} value={bean.id}>{bean.name}</option>
+            ))}
+          </select>
         </div>
-        
+
         <div>
-          <label htmlFor="roast" className="block text-gray-800">Roast</label>
-          <input
-            id="roast"
-            type="text"
-            value={roast}
-            onChange={(e) => setRoast(e.target.value)}
+          <label htmlFor="recipeId" className="block text-gray-800">Recipe</label>
+          <select
+            id="recipeId"
+            value={recipeId}
+            onChange={(e) => setRecipeId(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             required
+          >
+            <option value="">Select a recipe</option>
+            {recipes.map((recipe) => (
+              <option key={recipe.id} value={recipe.id}>{recipe.title}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="coordinate" className="block text-gray-800">Taste Coordinates</label>
+          <CoordinateSelector
+            initialX={tasteX}
+            initialY={tasteY}
+            onChange={(newX, newY) => {
+              setTasteX(newX);
+              setTasteY(newY);
+            }}
           />
         </div>
 
         <div>
-          <label htmlFor="process" className="block text-gray-800">Process</label>
-          <input
-            id="process"
-            type="text"
-            value={process}
-            onChange={(e) => setProcess(e.target.value)}
+          <label htmlFor="comment" className="block text-gray-800">Comment</label>
+          <textarea
+            id="comment"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
+            rows={4}
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-gray-800 text-white py-2 rounded"
-        >
-          Add
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="px-6 py-2 text-white bg-gray-800 rounded-md"
+          >
+            Create Note
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default CreateBean;
+export default CreateNote;

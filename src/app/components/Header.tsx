@@ -59,7 +59,7 @@ const Header = () => {
         {isLoggedIn && (
           <li className="flex flex-col items-center cursor-pointer" onClick={handleLogOut}>
             <button className="mt-2 text-red-500 hover:text-red-700 transition-colors">
-              ログアウト
+              Logout
             </button>
           </li>
         )}
