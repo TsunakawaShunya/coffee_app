@@ -64,15 +64,15 @@ const NoteDetailsPage = () => {
   }
 
   if (!note) {
-    return <div className="text-center text-gray-500">No note found.</div>;
+    return <div className="text-center text-gray-500">Noteがありません</div>;
   }
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Note Details</h1>
+      <h1 className="text-2xl font-bold mb-4">Note 詳細</h1>
 
       <div className="mb-4">
-        <strong>Date:</strong> {new Date(note.created_at).toLocaleDateString('ja-JP')}
+        <strong>日付:</strong> {new Date(note.created_at).toLocaleDateString('ja-JP')}
       </div>
 
       <div className="mb-4">
@@ -98,11 +98,11 @@ const NoteDetailsPage = () => {
       </div>
 
       <div className="mb-4">
-        <strong>Comment:</strong> {note.comment || 'No comments available.'}
+        <strong>コメント:</strong> {note.comment || 'No comments available.'}
       </div>
 
       <div className="mb-6">
-        <strong>Taste:</strong>
+        <strong>味:</strong>
         <div className="mt-4">
           <CoordinateSelector
             initialX={note.taste_x}

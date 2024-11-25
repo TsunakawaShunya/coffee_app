@@ -1,5 +1,6 @@
 // layout.tsx
 import localFont from "next/font/local";
+// import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,6 +15,12 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
+
+// const notoSansJP = Noto_Sans_JP({
+//   weight: ["400", "700"],
+//   subsets: ["latin"], 
+//   variable: "--font-noto-sans-jp",
+// });
 
 export const metadata = {
   title: "Coffee App",

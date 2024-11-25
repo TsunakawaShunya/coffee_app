@@ -16,7 +16,7 @@ const Notes = () => {
         onClick={() => router.push('/note/create')}
         className="mb-8 bg-gray-800 text-white px-4 py-2 rounded"
       >
-        Add Note
+        作成
       </button>
       
       <NotesList />

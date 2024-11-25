@@ -47,16 +47,17 @@ const CreateBean = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Add a New Bean</h1>
+      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Bean新規作成</h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="name" className="block text-gray-800">Name</label>
+          <label htmlFor="name" className="block text-gray-800">名前</label>
           <input
             id="name"
             type="text"
+            placeholder='国名/品種など'
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
@@ -65,10 +66,11 @@ const CreateBean = () => {
         </div>
         
         <div>
-          <label htmlFor="roast" className="block text-gray-800">Roast</label>
+          <label htmlFor="roast" className="block text-gray-800">焙煎度</label>
           <input
             id="roast"
             type="text"
+            placeholder='任意'
             value={roast}
             onChange={(e) => setRoast(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
@@ -77,10 +79,11 @@ const CreateBean = () => {
         </div>
 
         <div>
-          <label htmlFor="process" className="block text-gray-800">Process</label>
+          <label htmlFor="process" className="block text-gray-800">プロセス</label>
           <input
             id="process"
             type="text"
+            placeholder='任意'
             value={process}
             onChange={(e) => setProcess(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
@@ -91,7 +94,7 @@ const CreateBean = () => {
           type="submit"
           className="w-full bg-gray-800 text-white py-2 rounded"
         >
-          Add
+          追加
         </button>
       </form>
     </div>

@@ -48,16 +48,17 @@ const CreateRecipe = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Add a New Recipe</h1>
+      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Recipe新規作成</h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="title" className="block text-gray-800">Title</label>
+          <label htmlFor="title" className="block text-gray-800">タイトル</label>
           <input
             id="title"
             type="text"
+            placeholder='任意'
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
@@ -65,7 +66,7 @@ const CreateRecipe = () => {
         </div>
 
         <div>
-          <label htmlFor="method" className="block text-gray-800">Method</label>
+          <label htmlFor="method" className="block text-gray-800">抽出方法</label>
           <select
             id="method"
             value={method}
@@ -74,7 +75,7 @@ const CreateRecipe = () => {
             required
           >
             <option value="" disabled>
-              Select a method
+              抽出方法を選んでください
             </option>
             <option value="ペーパードリップ">ペーパードリップ</option>
             <option value="ネルドリップ">ネルドリップ</option>
@@ -88,10 +89,11 @@ const CreateRecipe = () => {
         </div>
 
         <div>
-          <label htmlFor="temp" className="block text-gray-800">Temperature (°C)</label>
+          <label htmlFor="temp" className="block text-gray-800">水温 [°C]</label>
           <input
             id="temp"
             type="number"
+            placeholder='任意'
             value={temp}
             onChange={(e) => setTemp(Number(e.target.value))}
             className="w-full p-2 border border-gray-300 rounded"
@@ -99,10 +101,11 @@ const CreateRecipe = () => {
         </div>
 
         <div>
-          <label htmlFor="ratio" className="block text-gray-800">Ratio (g/100ml)</label>
+          <label htmlFor="ratio" className="block text-gray-800">豆の量 [g/100cc]</label>
           <input
             id="ratio"
             type="number"
+            placeholder='任意'
             value={ratio}
             onChange={(e) => setRatio(Number(e.target.value))}
             className="w-full p-2 border border-gray-300 rounded"
@@ -113,7 +116,7 @@ const CreateRecipe = () => {
           type="submit"
           className="w-full bg-gray-800 text-white py-2 rounded"
         >
-          Add
+          追加
         </button>
       </form>
     </div>
