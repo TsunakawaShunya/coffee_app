@@ -17,7 +17,7 @@ const Bean = () => {
         onClick={() => router.push('bean/create')}
         className="mb-8 bg-gray-800 text-white px-4 py-2 rounded"
       >
-        Add Bean
+        追加
       </button>
       
       {/* 豆のリスト */}

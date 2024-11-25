@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "@/app/helpers/cookies";
 
-const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
 interface Recipe {
   id: number;
@@ -98,13 +98,13 @@ const RecipesList = () => {
             </button>
             <h2 className="text-lg font-bold text-gray-800">{recipe.title}</h2>
             <p className="text-gray-800 mt-2">
-              <strong>Method:</strong> {recipe.method || "Not Available"}
+              <strong>抽出方法:</strong> {recipe.method || "Not Available"}
             </p>
             <p className="text-gray-800">
-              <strong>Temp:</strong> {recipe.temp || "Not Available"}[°C]
+              <strong>水温:</strong> {recipe.temp || "Not Available"} [°C]
             </p>
             <p className="text-gray-800">
-              <strong>Ratio:</strong> {recipe.ratio || "Not Available"} [g/100cc]
+              <strong>豆の量:</strong> {recipe.ratio || "Not Available"} [g/100cc]
             </p>
           </div>
         ))

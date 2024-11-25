@@ -14,7 +14,7 @@ const CreateNote = () => {
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+  const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
   const { beans, recipes, loading, error: fetchError } = useBeansAndRecipes();
 
@@ -57,7 +57,7 @@ const CreateNote = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Add a New Note</h1>
+      <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Note新規作成</h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
 
@@ -71,7 +71,7 @@ const CreateNote = () => {
             className="w-full p-2 border border-gray-300 rounded"
             required
           >
-            <option value="">Select a bean</option>
+            <option value="">Beanを選んでください</option>
             {beans.map((bean) => (
               <option key={bean.id} value={bean.id}>{bean.name}</option>
             ))}
@@ -87,7 +87,7 @@ const CreateNote = () => {
             className="w-full p-2 border border-gray-300 rounded"
             required
           >
-            <option value="">Select a recipe</option>
+            <option value="">Recipeを選んでください</option>
             {recipes.map((recipe) => (
               <option key={recipe.id} value={recipe.id}>{recipe.title}</option>
             ))}
@@ -95,7 +95,7 @@ const CreateNote = () => {
         </div>
 
         <div>
-          <label htmlFor="coordinate" className="block text-gray-800">Taste Coordinates</label>
+          <label htmlFor="coordinate" className="block text-gray-800">味</label>
           <CoordinateSelector
             initialX={tasteX}
             initialY={tasteY}
@@ -107,10 +107,11 @@ const CreateNote = () => {
         </div>
 
         <div>
-          <label htmlFor="comment" className="block text-gray-800">Comment</label>
+          <label htmlFor="comment" className="block text-gray-800">コメント（500文字まで）</label>
           <textarea
             id="comment"
             value={comment}
+            placeholder='任意'
             onChange={(e) => setComment(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             rows={4}
@@ -122,7 +123,7 @@ const CreateNote = () => {
             type="submit"
             className="px-6 py-2 text-white bg-gray-800 rounded-md"
           >
-            Create Note
+            Noteを作成
           </button>
         </div>
       </form>

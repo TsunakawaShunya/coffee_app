@@ -1,6 +1,6 @@
 // lib/api/auth.ts
 import { setCookie, getCookie } from "@/app/helpers/cookies";
-const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1/auth";
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth`;
 
 const signIn = async ({ email, password }: { email: string; password: string }) => {
   const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/sign_in`, {

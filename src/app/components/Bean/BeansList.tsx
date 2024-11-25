@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "@/app/helpers/cookies";
 
-const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
 interface Bean {
   id: number;
@@ -97,15 +97,15 @@ const BeansList = () => {
             </button>
             <h2 className="text-lg font-bold text-gray-800">{bean.name}</h2>
             <p className="text-gray-800 mt-2">
-              <strong>Roast:</strong> {bean.roast || "Not Available"}
+              <strong>焙煎度:</strong> {bean.roast || "Not Available"}
             </p>
             <p className="text-gray-800">
-              <strong>Process:</strong> {bean.process || "Not Available"}
+              <strong>プロセス:</strong> {bean.process || "Not Available"}
             </p>
           </div>
         ))
       ) : (
-        <div className="col-span-full text-center text-gray-500">No beans found.</div>
+        <div className="col-span-full text-center text-gray-500">登録されているBeanがありません</div>
       )}
     </div>
   );

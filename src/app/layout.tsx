@@ -1,5 +1,6 @@
 // layout.tsx
 import localFont from "next/font/local";
+import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -13,6 +14,12 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const notoSansJP = Noto_Sans_JP({
+  weight: ["400", "700"],
+  subsets: ["latin"], 
+  variable: "--font-noto-sans-jp",
 });
 
 export const metadata = {
@@ -29,7 +36,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-brown-100`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} antialiased bg-brown-100`}
       >
         <div className="hidden md:block">
           <Header />
