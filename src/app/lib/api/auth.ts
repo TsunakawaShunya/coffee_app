@@ -33,7 +33,7 @@ const signUp = async ({ name, email, password }: { name: string; email: string; 
     },
     body: JSON.stringify({ name, email, password }),
   });
-
+  console.log(RAILS_DEVISE_ENDPOINT);
   const data = await response.json();
 
   if (response.ok) {
@@ -44,7 +44,6 @@ const signUp = async ({ name, email, password }: { name: string; email: string; 
   } else {
     throw new Error("Sign up failed");
   }
-  console.log(document.cookie);
 
   return data;
 };
