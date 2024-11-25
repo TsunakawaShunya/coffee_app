@@ -14,7 +14,7 @@ const CreateNote = () => {
   const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+  const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
   const { beans, recipes, loading, error: fetchError } = useBeansAndRecipes();
 

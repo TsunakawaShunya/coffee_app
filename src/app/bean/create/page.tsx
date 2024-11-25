@@ -5,13 +5,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from '../../helpers/cookies'; // ヘルパー関数をインポート
 
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
+
 const CreateBean = () => {
   const [name, setName] = useState('');
   const [roast, setRoast] = useState('');
   const [process, setProcess] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

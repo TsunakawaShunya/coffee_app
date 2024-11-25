@@ -11,7 +11,7 @@ const CreateRecipe = () => {
   const [ratio, setRatio] = useState<number | ''>('');
   const [error, setError] = useState('');
   const router = useRouter();
-  const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+  const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

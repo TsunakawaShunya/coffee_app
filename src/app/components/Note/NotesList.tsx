@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { getCookie } from "@/app/helpers/cookies";
 
-const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
 interface Note {
   id: number;
