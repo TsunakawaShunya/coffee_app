@@ -1,4 +1,3 @@
-// components/CoordinateSelector.tsx
 import { useState } from 'react';
 
 interface CoordinateSelectorProps {
@@ -36,8 +35,12 @@ const CoordinateSelector: React.FC<CoordinateSelectorProps> = ({ onChange, initi
   const handleMouseUp = () => setIsDragging(false);
 
   return (
-    <div className="relative w-full h-64 border border-gray-400 bg-gray-100">
-      {/* 軸の描画 */}
+    <div className="relative w-full h-64 border border-gray-400 bg-white">
+      {/* x軸とy軸 */}
+      <div className="absolute w-full h-px bg-gray-400 top-1/2 transform -translate-y-1/2" />
+      <div className="absolute h-full w-px bg-gray-400 left-1/2 transform -translate-x-1/2" />
+
+      {/* 軸のラベル */}
       <div className="absolute left-0 top-1/2 transform -translate-y-1/2 px-2 text-gray-600">
         酸味
       </div>
@@ -55,8 +58,8 @@ const CoordinateSelector: React.FC<CoordinateSelectorProps> = ({ onChange, initi
       <div
         className="absolute bg-gray-800 rounded-full"
         style={{
-          left: `${(x + 5) * 10}%`,  // Convert to percentage
-          top: `${(y + 5) * 10}%`,    // Convert to percentage
+          left: `${(x + 5) * 10}%`, // Convert to percentage
+          top: `${(y + 5) * 10}%`,  // Convert to percentage
           width: '20px',
           height: '20px',
         }}
@@ -66,8 +69,8 @@ const CoordinateSelector: React.FC<CoordinateSelectorProps> = ({ onChange, initi
       <div
         className="absolute text-xs text-gray-700 font-bold"
         style={{
-          left: `${(x + 5) * 10}%`,  // Convert to percentage
-          top: `${(y + 5) * 10}%`,    // Convert to percentage
+          left: `${(x + 5) * 10}%`, // Convert to percentage
+          top: `${(y + 5) * 10}%`,  // Convert to percentage
           transform: 'translate(-50%, -100%)',
         }}
       >
