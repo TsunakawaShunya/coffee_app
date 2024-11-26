@@ -68,15 +68,25 @@ const CreateBean = () => {
         
         <div>
           <label htmlFor="roast" className="block text-gray-800">焙煎度</label>
-          <input
-            id="roast"
-            type="text"
-            placeholder='任意'
+          <select
+            id="method"
             value={roast}
             onChange={(e) => setRoast(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
             required
-          />
+          >
+            <option value="" disabled>
+              焙煎度を選んでください
+            </option>
+            <option value="不明">不明</option>
+            <option value="ライトロースト">ライトロースト</option>
+            <option value="シナモンロースト">シナモンロースト</option>
+            <option value="ミディアムロースト">ミディアムロースト</option>
+            <option value="ハイロースト">ハイロースト</option>
+            <option value="シティロースト">シティロースト</option>
+            <option value="フルシティロースト">フルシティロースト</option>
+            <option value="イタリアンロースト">イタリアンロースト</option>
+          </select>
         </div>
 
         <div>
