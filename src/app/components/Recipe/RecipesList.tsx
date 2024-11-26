@@ -109,7 +109,7 @@ const RecipesList = () => {
           </div>
         ))
       ) : (
-        <div className="col-span-full text-center text-gray-500">No recipes found.</div>
+        <div className="col-span-full text-center text-gray-500">登録されているRecipeがありません</div>
       )}
     </div>
   );

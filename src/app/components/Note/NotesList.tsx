@@ -121,7 +121,7 @@ const NotesList = () => {
           </div>
         ))
       ) : (
-        <div className="col-span-full text-center text-gray-500">No notes found.</div>
+        <div className="col-span-full text-center text-gray-500">登録されているNoteがありません</div>
       )}
     </div>
   );
