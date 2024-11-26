@@ -1,7 +1,7 @@
 // helpers/fetchData.ts
 import { getCookie } from './cookies'; // getCookie関数をインポート
 
-const RAILS_DEVISE_ENDPOINT = "http://localhost:3001/api/v1";
+const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
 export const fetchBeans = async () => {
   const response = await fetch(`${RAILS_DEVISE_ENDPOINT}/beans`, {
