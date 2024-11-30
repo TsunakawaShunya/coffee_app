@@ -12,6 +12,7 @@ interface Recipe {
   method: string | null;
   temp: number | null;
   ratio: number | null;
+  comment: string;
   created_at: string;
 }
 
@@ -65,13 +66,13 @@ const RecipeDetailsPage = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="relative border border-gray-200 rounded-lg shadow-md m-4 p-6 bg-white hover:shadow-lg transition-shadow">
       <h1 className="text-2xl font-bold mb-4">Recipe 詳細</h1>
       <div className="mb-4">
         <strong>日付:</strong> {new Date(recipe.created_at).toLocaleDateString('ja-JP')}
       </div>
       <div className="mb-4">
-        <strong>タイトル:</strong> {recipe.title}
+        <strong>タイトル:</strong> {recipe.title || "タイトルなし"}
       </div>
       <div className="mb-4">
         <strong>方法:</strong> {recipe.method || 'Not specified'}
@@ -81,6 +82,9 @@ const RecipeDetailsPage = () => {
       </div>
       <div className="mb-4">
         <strong>豆の量:</strong> {recipe.ratio ? `${recipe.ratio} [g/100cc]` : 'Not specified'}
+      </div>
+      <div className="mb-4">
+        <strong>コメント:</strong> {recipe.comment ? `${recipe.comment} [g/100cc]` : 'Not specified'}
       </div>
     </div>
   );

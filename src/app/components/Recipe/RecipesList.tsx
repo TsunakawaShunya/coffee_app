@@ -11,6 +11,7 @@ interface Recipe {
   method: string;
   temp: number;
   ratio: number;
+  comment: string;
 }
 
 const RecipesList = () => {
@@ -96,7 +97,7 @@ const RecipesList = () => {
             >
               &times;
             </button>
-            <h2 className="text-lg font-bold text-gray-800">{recipe.title}</h2>
+            <h2 className="text-lg font-bold text-gray-800">{recipe.title || "タイトルなし"}</h2>
             <p className="text-gray-800 mt-2">
               <strong>抽出方法:</strong> {recipe.method || "Not Available"}
             </p>
@@ -105,6 +106,9 @@ const RecipesList = () => {
             </p>
             <p className="text-gray-800">
               <strong>豆の量:</strong> {recipe.ratio || "Not Available"} [g/100cc]
+            </p>
+            <p className="text-gray-800">
+              <strong>コメント:</strong> {recipe.comment || "Not Available"}
             </p>
           </div>
         ))

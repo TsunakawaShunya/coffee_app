@@ -116,7 +116,7 @@ const NotesList = () => {
             {/* 豆の名前とレシピのタイトル */}
             <p className="text-gray-800 mt-2">
               <strong>Bean: </strong>{note.bean?.name || "Unknown"} <br />
-              <strong>Recipe: </strong>{note.recipe?.title || "Not Available"}
+              <strong>Recipe: </strong>{note.recipe?.title || "タイトルなし"}
             </p>
           </div>
         ))
