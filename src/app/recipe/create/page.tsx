@@ -9,6 +9,7 @@ const CreateRecipe = () => {
   const [method, setMethod] = useState('');
   const [temp, setTemp] = useState<number | ''>('');
   const [ratio, setRatio] = useState<number | ''>('');
+  const [comment, setComment] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
   const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
@@ -31,6 +32,7 @@ const CreateRecipe = () => {
             method,
             temp,
             ratio,
+            comment,
           },
         }),
       });
@@ -108,6 +110,17 @@ const CreateRecipe = () => {
             placeholder='任意'
             value={ratio}
             onChange={(e) => setRatio(Number(e.target.value))}
+            className="w-full p-2 border border-gray-300 rounded"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="comment" className="block text-gray-800">コメント</label>
+          <textarea
+            id="comment"
+            placeholder="任意"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             className="w-full p-2 border border-gray-300 rounded"
           />
         </div>

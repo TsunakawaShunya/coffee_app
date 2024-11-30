@@ -90,7 +90,7 @@ const NoteDetailsPage = () => {
         <strong>Recipe:</strong>{' '}
         {note.recipe ? (
           <a href={`/recipe/${note.recipe.id}`} className="text-blue-500 hover:underline">
-            {note.recipe.title}
+            {note.recipe.title.trim() === "" ? "タイトルなし" : note.recipe.title}
           </a>
         ) : (
           'Not Available'

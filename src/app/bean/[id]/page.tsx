@@ -64,7 +64,7 @@ const BeanDetailsPage = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="relative border border-gray-200 rounded-lg shadow-md m-4 p-6 bg-white hover:shadow-lg transition-shadow">
       <h1 className="text-2xl font-bold mb-4">Bean 詳細</h1>
       <div className="mb-4">
         <strong>日付:</strong> {new Date(bean.created_at).toLocaleDateString('ja-JP')}
