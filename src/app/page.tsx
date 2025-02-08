@@ -1,30 +1,37 @@
-// app/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { currentUser } from "@/app/lib/api/auth";
+import { currentUser, signIn } from "@/app/lib/api/auth";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function Home() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
 
-  useEffect(() => {
-    // 現在のユーザーを取得してログイン状態を確認
-    const fetchCurrentUser = async () => {
-      try {
-        const user = await currentUser();
-        if (user && user.data) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        setIsLoggedIn(false);
+  // テストアカウントでログイン
+  const testEmail = "test@mail.com";
+  const testPassword = "testtest";
+  const router = useRouter();
+  const testLogin = async () => {
+    try {
+      const response = await signIn({ email: testEmail, password: testPassword });
+      console.log("ログインレスポンス:", response); // デバッグ用
+  
+      // 正しくログインできた場合はリダイレクト
+      if (response && response.data) {
+        setIsLoggedIn(true);
+        router.push("/bean");
+      } else {
+        alert("ログインに失敗しました。もう一度お試しください");
       }
-    };
-
-    fetchCurrentUser();
-  }, []);
-
+    } catch (err) {
+      console.log("エラー:", err);
+      alert("ログインに失敗しました。もう一度お試しください");
+    }
+  };
+  
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-8">
@@ -68,6 +75,12 @@ export default function Home() {
               >
                 新規登録
               </Link>
+              <button
+                onClick={testLogin}
+                className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-500 transition duration-300 text-center w-full sm:w-auto"
+              >
+                テストアカウントでログイン
+              </button>
             </>
           )}
         </div>

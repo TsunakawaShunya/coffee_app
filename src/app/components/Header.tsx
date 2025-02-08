@@ -5,31 +5,16 @@ import { FaCoffee, FaBookmark, FaStickyNote } from 'react-icons/fa';
 import Link from 'next/link';
 import { logOut, currentUser } from '@/app/lib/api/auth';
 import { usePathname } from 'next/navigation';
+import { useAuth } from "@/app/context/AuthContext";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   const pathname = usePathname();
-
-  useEffect(() => {
-    // 現在のユーザーを取得してログイン状態を確認
-    const fetchCurrentUser = async () => {
-      try {
-        const user = await currentUser();
-        if (user && user.data) {
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        setIsLoggedIn(false);
-      }
-    };
-
-    fetchCurrentUser();
-  }, []);
 
   const handleLogOut = async () => {
     try {
       await logOut();
-      setIsLoggedIn(false);
+      setIsLoggedIn(false); // Contextの状態を更新
     } catch (error) {
       alert("ログアウトに失敗しました。もう一度お試しください。");
     }

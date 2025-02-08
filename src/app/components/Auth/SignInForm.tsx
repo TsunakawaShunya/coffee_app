@@ -1,15 +1,20 @@
+"use client";
+
 import { useState } from "react";
 import { signIn } from "../../lib/api/auth";
+import { useAuth } from "@/app/context/AuthContext";
 
 const SignInForm = ({ router }: { router: any }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const { setIsLoggedIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await signIn({ email, password });
+      await signIn({ email, password });
+      setIsLoggedIn(true);
       router.push("/bean");
     } catch (err) {
       setError("ログインに失敗しました。もう一度お試しください");

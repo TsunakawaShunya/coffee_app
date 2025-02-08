@@ -1,9 +1,9 @@
-// layout.tsx
 import localFont from "next/font/local";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { AuthProvider } from "@/app/context/AuthContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,10 +15,9 @@ const geistMono = localFont({
   variable: "--font-geist-mono",
   weight: "100 900",
 });
-
 const notoSansJP = Noto_Sans_JP({
   weight: ["400", "700"],
-  subsets: ["latin"], 
+  subsets: ["latin"],
   variable: "--font-noto-sans-jp",
 });
 
@@ -29,22 +28,23 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-
+}) {
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} antialiased bg-brown-100`}
       >
-        <div className="hidden md:block">
-          <Header />
-        </div>
+        <AuthProvider>
+          <div className="hidden md:block">
+            <Header />
+          </div>
           <div>{children}</div>
-        <div className="block md:hidden">
-          <Footer />
-        </div>
+          <div className="block md:hidden">
+            <Footer />
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

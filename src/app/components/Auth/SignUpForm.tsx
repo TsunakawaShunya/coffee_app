@@ -1,5 +1,6 @@
 import { signUp } from "../../lib/api/auth";
 import { useState } from "react";
+import { useAuth } from "@/app/context/AuthContext";
 
 const SignUpForm = ({ router }: { router: any }) => {
   const [name, setName] = useState("");
@@ -7,6 +8,7 @@ const SignUpForm = ({ router }: { router: any }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState(""); // パスワード確認フィールド
   const [error, setError] = useState<string | null>(null);
+  const { setIsLoggedIn } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +20,7 @@ const SignUpForm = ({ router }: { router: any }) => {
       const response = await signUp({ name, email, password });
 
       if (response.status === "success") {
+        setIsLoggedIn(true);
         router.push("/bean");
       } else {
         setError("新規登録に失敗しました。もう一度お試しください");
