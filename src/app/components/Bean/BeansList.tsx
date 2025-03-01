@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getCookie } from "@/app/helpers/cookies";
 
 const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
-const PER_PAGE = 3;
+const PER_PAGE = 9;
 
 interface Bean {
   id: number;
@@ -45,8 +45,13 @@ const BeansList = () => {
       }
 
       const data = await response.json();
-      console.log(data);
-      setBeans((prevBeans) => [...prevBeans, ...data.beans]);
+      setBeans((prevBeans) => {
+        // 新しいデータから既存のIDを除外
+        const newBeans = data.beans.filter(
+          (newBean: Bean) => !prevBeans.some((prevBean) => prevBean.id === newBean.id)
+        );
+        return [...prevBeans, ...newBeans];
+      });
       setNextCursor(data.next_cursor);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unknown error occurred.");
