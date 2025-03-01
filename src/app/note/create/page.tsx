@@ -16,7 +16,7 @@ const CreateNote = () => {
   const router = useRouter();
   const RAILS_DEVISE_ENDPOINT = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`;
 
-  const { beans, recipes, loading, error: fetchError } = useBeansAndRecipes();
+  const { beans = [], recipes = [], loading, error: fetchError } = useBeansAndRecipes();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,8 +55,9 @@ const CreateNote = () => {
   if (loading) return <p>Loading...</p>;
   if (fetchError) return <p>{fetchError}</p>;
 
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 mb-20">
       <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">Note新規作成</h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}

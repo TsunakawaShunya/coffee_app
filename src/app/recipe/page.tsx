@@ -7,7 +7,7 @@ const Bean = () => {
   const router = useRouter();
   
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 mb-20">
       <h1 className="text-2xl font-bold text-gray-800 text-center mb-8">
         My Coffee Recipes
       </h1>
